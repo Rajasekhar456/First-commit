@@ -1,0 +1,34 @@
+<PROFILES>
+	<PROFILE1>	
+        <CacheRowInfo ExactCols="NAME_STND_PS1" CacheCols="RECID~NAME_STND_PS~FATHER_NAME_STND_PS~ADDRESS_STND~ADDRESS_HNO_STND~MOBILE_NUMBER" OtherCols="POI_ID_STND~MOBILE_NUMBER" OtherOperatorCountColumn="OPT" />
+		
+		<CacheInfo Type="OUT_MEMORY">
+			<Cache CNo="5" FilterType="FT_FUZZY_NAME" FilterInfo="NAME_STND_PS1~~" 	CacheCols="RECID~NAME_STND_PS~FATHER_NAME_STND_PS~ADDRESS_STND~ADDRESS_HNO_STND~MOBILE_NUMBER"  		FilterIgnoreCond=""/>
+		</CacheInfo>
+		
+		<Rules SearchAddType = "2" ConsolidatedThresHoldInfo="8" >
+		   <Rule RuleName="Name-FName-Address-HNO"	RNo="1"	    CNo="5"	FilterType="FT_FUZZY_NAME"	 Check_OtherOperatorCount="1"	IgnoreDuplicateMatchesCol="MOBILE_NUMBER" 	 ExcludeCol="MOBILE_NUMBER" RulePreCond=""  CompareColsInfo="NAME_STND_PS~COL_TYPE_NAME~COMP_TYPE_MANDATORY~60~0#$#0~50~0~3~1~1;FATHER_NAME_STND_PS~COL_TYPE_NAME~COMP_TYPE_OPTIONAL~50~0#$#0~50~0~3~1~1;ADDRESS_STND~COL_TYPE_ADDRESS~COMP_TYPE_MANDATORY~55~40;ADDRESS_HNO_STND~COL_TYPE_HNO~COMP_TYPE_OPTIONAL~0~0"   ThresHoldInfo="8~CONTINUE~FAILED" 	SubRules="100~2;100~2;65~0;100~0#100~2;0~-2;80~70;100~0#100~2;100~2;80~0;0~100#100~2;0~-2;95~90;0~100#100~2;60~1;80~70;0~100#100~2;40~1;70~45;100~0#80~0;100~2;75~0;0~100#100~2;80~0;80~65;0~100#80~0;0~-2;95~95;0~100#65~1;100~2;70~60;0~100#100~2;80~0;70~0;100~0#80~0;0~-2;90~85;100~0#80~0;100~2;70~0;100~0#80~0;60~1;80~60;0~100#100~2;100~2;90~0;0~0#65~1;100~2;70~0;100~0#100~2;65~1;80~70;0~0#80~0;80~0;75~50;0~100#80~0;50~1;80~70;100~0#100~2;0~-2;98~95;0~0#85~1;0~-2;90~85;0~100#65~1;80~0;80~75;0~100#80~0;80~0;70~0;100~0#85~1;0~-2;80~80;100~0#100~2;80~0;80~70;0~0#100~2;80~3;80~70;0~100#80~0;100~2;85~50;0~0#100~2;80~3;70~0;100~0#85~3;0~-2;75~65;100~0#100~2;75~-3;80~70;0~100#85~3;100~2;90~0;0~100#100~2;75~-3;70~0;100~0#65~1;80~0;70~65;100~0#85~3;0~-2;95~90;0~100#85~3;100~2;75~0;100~0#80~0;65~1;85~70;0~0#85~3;60~1;75~75;0~100#85~1;60~1;80~75;0~100#80~0;0~-2;98~95;0~0#85~-3;0~-2;85~80;100~0#85~3;80~0;75~70;0~100#80~0;80~3;80~70;0~100#80~0;80~3;75~0;100~0#80~0;75~-3;75~0;100~0#85~3;50~1;80~75;100~0#65~1;100~2;95~90;0~0#85~1;50~1;75~70;100~0#85~3;80~0;75~0;100~0#85~-3;0~-2;90~85;0~100#80~0;75~-3;80~70;0~100#85~-3;100~2;85~0;100~0#85~-3;50~1;75~55;100~0#80~0;80~0;85~70;0~0#85~-3;100~2;90~0;0~100#85~-3;60~1;85~80;0~100#85~3;80~3;75~70;0~100#85~1;0~-2;98~95;0~0#85~-3;80~0;75~50;100~0#85~3;0~-2;98~95;0~0#65~1;80~0;95~90;0~0#85~3;100~2;95~90;0~0#85~3;65~1;95~90;0~0#85~-3;80~0;85~80;0~100#100~2;80~3;95~0;0~0#85~3;75~-3;75~70;0~100#85~1;75~-3;70~60;100~0#100~2;75~-3;95~0;0~0" Query="" QueryArgLst=""/>
+		   <Rule RuleName="POI"			            RNo="2"	    CNo=""  FilterType="FT_QUERY" 	     Check_OtherOperatorCount="1"	IgnoreDuplicateMatchesCol="1" 	             ExcludeCol=""  	        RulePreCond="" 	CompareColsInfo="" 	                                                                                                                                                                                                                                                         ThresHoldInfo="8~CONTINUE~FAILED" 	SubRules="" Query="SELECT RECID,MOBILE_NUMBER FROM &lt;$TableSchema$&gt;.MASTER_IP WHERE (POI_ID_STND = '$ARG1$') AND (MOBILE_NUMBER != '$ARG2$' )" 	QueryArgLst="$ARG1$^POI_ID_STND~$ARG2$^MOBILE_NUMBER"/>
+		</Rules>
+		
+		<Rules_offline JobChunkSize = "100">
+
+			<Rule RuleName="Name-Address"	RNo="1"	    CNo="5"	FilterType="FT_FUZZY_NAME"	 CompareColsInfo="NAME_STND_PS~COL_TYPE_NAME~COMP_TYPE_MANDATORY~60~0#$#0~50~0~3~1~1;FATHER_NAME_STND_PS~COL_TYPE_NAME~COMP_TYPE_OPTIONAL~50~0#$#0~50~0~3~1~1;ADDRESS_STND~COL_TYPE_ADDRESS~COMP_TYPE_MANDATORY~55~40"       SubRules="" 	Query="" QueryArgLst=""/>
+			<Rule RuleName="POI"	        RNo="2"     CNo=""	FilterType="FT_QUERY" 	  	 CompareColsInfo="" 	 																								     SubRules="" 	Query="INSERT INTO &lt;$TableSchema$&gt;.DEDUP_SOURCE_TARGET(SOURCE,TARGET,RULE_NO,SUB_RULE_NO,MATCH_PERCENTAGE,JOBID)SELECT A.RECID,B.RECID,2,0,100,$JOBID$ FROM MASTER_IP A,MASTER_IP B WHERE (A.POI_ID_STND IS NOT NULL) AND (B.POI_ID_STND IS NOT NULL) AND (B.POI_ID_STND &lt;&gt; &quot;&quot;) AND (A.POI_ID_STND &lt;&gt; &quot;&quot;) AND (A.POI_ID_STND=B.POI_ID_STND) AND A.RECID &lt;&gt; B.RECID AND A.RECID &lt; B.RECID" 	QueryArgLst=""/>
+			
+		</Rules_offline>
+		
+		<StrengthCompareColsInfo StrengthsCompareType = "1" ChunkSize = "100000" CompareColsInfo = "NAME_STND_PS~COL_TYPE_NAME~NAME_STRENGTH~NAME_LEVEL#$#0~50~0~3~1~1;FATHER_NAME_STND_PS~COL_TYPE_NAME~FNAME_STRENGTH~FNAME_LEVEL#$#0~50~0~3~1~1;ADDRESS_STND~COL_TYPE_ADDRESS~ADDRESS_MIN_STRENGTH~ADDRESS_MAX_STRENGTH;ADDRESS_HNO_STND~COL_TYPE_HNO~HNO_STRENGTH~HNO_NULL_STRENGTH;POI_ID_STND~COL_TYPE_EXACT~POI_STRENGTH~"/>
+		
+		<Dedup_Source_Target_Rules Columns = "RULE_NUM,NAME_LEVEL,NAME_STRENGTH,FNAME_LEVEL,FNAME_STRENGTH,ADDRESS_MIN_STRENGTH,ADDRESS_MAX_STRENGTH,HNO_STRENGTH,HNO_NULL_STRENGTH,POI_STRENGTH"/>
+				
+		<Indexes>
+			<Pass1>
+				<Index Name="IDXIP_RECID_$JOBID$" TableName="MASTER_IP" ColumnName="RECID" IndexType = ""/>
+				<Index Name="IDXOP_RECID_$JOBID$" TableName="MASTER_OP" ColumnName="RECID" IndexType = ""/>
+			</Pass1>
+			<Cache>
+			</Cache>
+		</Indexes>
+	</PROFILE1>
+</PROFILES>
